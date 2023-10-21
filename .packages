@@ -1,5 +1,0 @@
-Parallel::ForkManager
-JSON::XS
-Readonly
-Exporter::Easy
-Mojolicious::Plugin::OpenAPI
