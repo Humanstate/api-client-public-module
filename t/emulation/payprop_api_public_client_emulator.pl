@@ -8,10 +8,6 @@ use Mojolicious::Lite;
 use JSON::PP;
 use Mojo::JSON;
 
-
-
-# app->secrets([ int( rand( 1_000_000 ) ) . time . int( rand( 1_000_000 ) ) ]);
-
 post '/api/oauth/access_token' => sub {
 	my ( $c ) = @_;
 
