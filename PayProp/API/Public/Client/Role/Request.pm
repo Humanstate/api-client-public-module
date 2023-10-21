@@ -115,8 +115,16 @@ sub _handle_request {
 sub _build_url {
 	my ( $self, $params ) = @_;
 
-	return Mojo::URL
-		->new( $self->url )
+	$params //= {};
+	my $path_params = delete $params->{path_params} // {};
+
+	my $URL = Mojo::URL->new( $self->url . ( $path_params->%* ? '/' : '' ) ); # trailing slash preserves "route path"
+
+	$URL->path( join( '/', map { $path_params->{ $_ } } ( grep { exists $path_params->{ $_ } } $self->_path_params->@* ) ) )
+		if $path_params->%*
+	;
+
+	return $URL
 		->query({ map { $_ => $params->{ $_ } } ( grep { exists $params->{ $_ } } $self->_query_params->@* ) })
 		->to_string
 	;

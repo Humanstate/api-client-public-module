@@ -49,12 +49,10 @@ Return:
 sub api_request_p {
 	my ( $self, $args ) = @_;
 
-	use Data::Dumper; warn Dumper( 'Error', $args );
 	$self
 		->_api_request_p( $args )
 		->catch( sub {
 			my ( $error ) = @_;
-
 
 			if ( $self->_can_retry_request( $error ) ) {
 				return $self

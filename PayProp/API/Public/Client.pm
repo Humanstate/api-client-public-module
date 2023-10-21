@@ -84,5 +84,22 @@ has export => (
 	}
 );
 
+has entity => (
+	is => 'ro',
+	isa => 'PayProp::API::Public::Client::Request::Entity',
+	lazy => 1,
+	default => sub {
+		my ( $self ) = @_;
+
+		require PayProp::API::Public::Client::Request::Entity;
+		return PayProp::API::Public::Client::Request::Entity->new(
+			ua => $self->ua,
+			domain => $self->domain,
+			scheme => $self->scheme,
+			authorization => $self->authorization,
+		);
+	}
+);
+
 __PACKAGE__->meta->make_immutable;
 
