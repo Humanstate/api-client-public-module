@@ -1,4 +1,4 @@
-#!/opt/tools/bin/perl
+#!/usr/bin/env perl
 
 use strict;
 use warnings;
@@ -6,36 +6,44 @@ use warnings;
 use Mojolicious::Lite;
 
 use JSON::PP;
+use Mojo::JSON;
+
 
 
 # app->secrets([ int( rand( 1_000_000 ) ) . time . int( rand( 1_000_000 ) ) ]);
 
-# post '/api/oauth/access_token' => sub {
-# 	my ( $c ) = @_;
+post '/api/oauth/access_token' => sub {
+	my ( $c ) = @_;
 
-# 	my $status_code = $c->param('_status_code') // 200;
+	my $status_code = $c->param('_status_code') // 200;
 
-# 	return $c->render(
-# 		status => $status_code,
-# 		json => {
-# 			$status_code == 200
-# 				? ( access_token => 'ACCESS_TOKEN' )
-# 				: (
-# 					error => 'access_denied',
-# 					error_description => 'invalid entity access',
-# 				),
-# 		},
-# 	);
-# };
+	return $c->render(
+		status => $status_code,
+		json => {
+			$status_code == 200
+				? ( access_token => 'ACCESS_TOKEN' )
+				: (
+					error => 'access_denied',
+					error_description => 'invalid entity access',
+				),
+		},
+	);
+};
+
 
 get '/api/agency/v1.1/export/beneficiaries' => sub {
 	my ( $self ) = @_;
+
+	# use Data::Dumper; warn Dumper( 'OPENAPI', $openapi );
 
 	return $self->render(
 		status => 200,
 		json => _get_export_beneficiaries(),
 	);
-};
+}, 'export/beneficiaries';
+
+# setup API routes from swagger config
+
 
 # get '/api/agency/v1.1/export/tenants' => sub {
 # 	my ( $self ) = @_;
