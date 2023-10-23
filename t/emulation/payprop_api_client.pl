@@ -83,6 +83,43 @@ put '/api/agency/v1.1/entity/payment/:external_id' => sub {
 	);
 };
 
+get '/api/agency/v1.1/entity/invoice/:external_id' => sub {
+	my ( $self ) = @_;
+
+	return $self->render(
+		status => 200,
+		json => _get_entity_invoice({
+			path_params => {
+				external_id => $self->param("external_id")
+			},
+
+			$self->req->params->to_hash->%*,
+		}),
+	);
+};
+
+post '/api/agency/v1.1/entity/invoice' => sub {
+	my ( $self ) = @_;
+
+	return $self->render(
+		status => 200,
+		json => _get_entity_invoice(),
+	);
+};
+
+put '/api/agency/v1.1/entity/invoice/:external_id' => sub {
+	my ( $self ) = @_;
+
+	return $self->render(
+		status => 200,
+		json => _get_entity_invoice({
+			path_params => {
+				external_id => $self->param("external_id")
+			},
+		}),
+	);
+};
+
 # TODO: move to a JSON file
 sub _get_export_beneficiaries {
 	my ( $params ) = @_;
@@ -1557,6 +1594,67 @@ sub _get_entity_payment {
 			"start_date" => "2023-10-06",
 			"use_money_from" => "any_tenant",
 		},
+	);
+
+	# the query param in this case is "is_customer_id"
+	# which supersedes the route "external_id" when doing a lookup
+	if ( $params->%* ) {
+
+		@mock_data = grep { $_->{customer_id} // '' eq $params->{is_customer_id} } @mock_data;
+
+		return shift @mock_data;
+	}
+
+	@mock_data = grep { $_->{id} eq $path_params->{external_id} } @mock_data
+		if $path_params->%*
+	;
+
+	return shift @mock_data;
+}
+
+
+# TODO: move to a JSON file
+sub _get_entity_invoice {
+	my ( $params ) = @_;
+
+	$params //= {};
+	my $path_params = delete $params->{ path_params } // {};
+
+	my @mock_data = (
+		{
+			"amount" => 850.0,
+			"category_id" => "Vv2XlY1ema",
+			"customer_id" => 'FirstInvoiceCustomerID',
+			"deposit_id" => "FGF7",
+			"description" => "Rent For Exmouth Avenue 21",
+			"end_date" => undef,
+			"frequency" => "M",
+			"has_invoice_period" => JSON::PP::true,
+			"has_tax" => JSON::PP::false,
+			"id" => "WrJvLzqD1l",
+			"is_direct_debit" => JSON::PP::false,
+			"payment_day" => 8,
+			"property_id" => "mGX0O4zrJ3",
+			"start_date" => "2022-04-08",
+			"tenant_id" => "8EJAnqDyXj"
+		},
+		{
+			"amount" => 550.0,
+			"category_id" => "Vv2XlY1ema",
+			"customer_id" => undef,
+			"deposit_id" => "FGF7",
+			"description" => "Rent For Exmouth Avenue 21",
+			"end_date" => undef,
+			"frequency" => "M",
+			"has_invoice_period" => JSON::PP::true,
+			"has_tax" => JSON::PP::false,
+			"id" => "Vv2XlY1ema",
+			"is_direct_debit" => JSON::PP::false,
+			"payment_day" => 8,
+			"property_id" => "mGX0O4zrJ3",
+			"start_date" => "2022-04-08",
+			"tenant_id" => "8EJAnqDyXj"
+		}
 	);
 
 	# the query param in this case is "is_customer_id"

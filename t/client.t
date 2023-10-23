@@ -55,12 +55,12 @@ subtest 'exports' => sub {
 	foreach my $Client ( $APIKeyClient, $ClientCredentialsClient ) {
 		my $Export = $Client->export;
 
-		subtest 'beneficiaries' => sub {
+		isa_ok(
+			my $Beneficiaries = $Export->beneficiaries,
+			'PayProp::API::Public::Client::Request::Export::Beneficiaries'
+		);
 
-			isa_ok(
-				my $Beneficiaries = $Export->beneficiaries,
-				'PayProp::API::Public::Client::Request::Export::Beneficiaries'
-			);
+		subtest 'beneficiaries' => sub {
 
 			$Beneficiaries
 				->list_p
@@ -74,6 +74,23 @@ subtest 'exports' => sub {
 				} )
 				->wait
 			;
+		};
+
+		subtest 'filter by query param' => sub {
+
+			$Beneficiaries
+				->list_p({ customer_id => 'CustomerID' })
+				->then( sub {
+					my ( $beneficiaries ) = @_;
+
+					is scalar $beneficiaries->@*, 1;
+					isa_ok( $_, 'PayProp::API::Public::Client::Response::Export::Beneficiary' )
+						for $beneficiaries->@*
+					;
+				} )
+				->wait
+			;
+
 		};
 	}
 
@@ -183,6 +200,106 @@ subtest 'entity' => sub {
 						->then( sub {
 							my ( $UpdatedPayment ) = @_;
 							isa_ok( $UpdatedPayment, 'PayProp::API::Public::Client::Response::Entity::Payment' );
+						} )
+						->wait
+					;
+				};
+			};
+		};
+
+		subtest 'invoice' => sub {
+
+			isa_ok(
+				my $Invoice = $Entity->invoice,
+				'PayProp::API::Public::Client::Request::Entity::Invoice'
+			);
+
+			subtest 'READ' => sub {
+
+				subtest 'without query params' => sub {
+
+					$Invoice
+						->list_p({ path_params => { external_id => 'Vv2XlY1ema' } })
+						->then( sub {
+							my ( $RetrievedInvoice ) = @_;
+
+							is $RetrievedInvoice->id, 'Vv2XlY1ema';
+							isa_ok( $RetrievedInvoice, 'PayProp::API::Public::Client::Response::Entity::Invoice' );
+						} )
+						->wait
+					;
+				};
+
+				subtest '?is_customer_id' => sub {
+
+					$Invoice
+						->list_p({ is_customer_id => 'FirstInvoiceCustomerID', path_params => { external_id => 'Vv2XlY1ema' } })
+						->then( sub {
+							my ( $Invoice ) = @_;
+
+							is $Invoice->customer_id, 'FirstInvoiceCustomerID';
+							isa_ok( $Invoice, 'PayProp::API::Public::Client::Response::Entity::Invoice' );
+						} )
+						->wait
+					;
+				};
+			};
+
+			subtest 'CREATE' => sub {
+
+				my $data = {
+					"amount" => 850.0,
+					"frequency" => "M",
+					"payment_day" => 8,
+					"tenant_id" => "8EJAnqDyXj",
+					"start_date" => "2022-04-08",
+					"category_id" => "Vv2XlY1ema",
+					"property_id" => "mGX0O4zrJ3",
+				};
+
+				$Invoice
+					->create_p( $data )
+					->then( sub {
+						my ( $CreatedInvoice ) = @_;
+
+						is $CreatedInvoice->id, 'WrJvLzqD1l';
+						isa_ok( $CreatedInvoice, 'PayProp::API::Public::Client::Response::Entity::Invoice' );
+					} )
+					->wait
+				;
+			};
+
+			subtest 'UPDATE' => sub {
+
+				my $data = {
+					"amount" => 850.0,
+				};
+
+				subtest 'without query params' => sub {
+
+					$Invoice
+						->update_p( { path_params => { external_id => 'Vv2XlY1ema' } }, $data )
+						->then( sub {
+							my ( $UpdatedInvoice ) = @_;
+							isa_ok( $UpdatedInvoice, 'PayProp::API::Public::Client::Response::Entity::Invoice' );
+						} )
+						->wait
+					;
+				};
+
+				subtest '?is_customer_id' => sub {
+
+					$Invoice
+						->update_p(
+							{
+								is_customer_id => 'FirstInvoiceCustomerID',
+								path_params => { external_id => 'Vv2XlY1ema' }
+							},
+							$data,
+						)
+						->then( sub {
+							my ( $UpdatedInvoice ) = @_;
+							isa_ok( $UpdatedInvoice, 'PayProp::API::Public::Client::Response::Entity::Invoice' );
 						} )
 						->wait
 					;

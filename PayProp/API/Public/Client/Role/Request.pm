@@ -99,6 +99,7 @@ sub _handle_request {
 	my $params = $args->{params} // {};
 	my $content = $args->{content} // {};
 	my $headers = $args->{headers} // {};
+
 	return
 		$self->ua->$http_verb(
 			$self->_build_url( $params ),

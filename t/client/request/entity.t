@@ -23,4 +23,9 @@ isa_ok(
 	'PayProp::API::Public::Client::Request::Entity::Payment',
 );
 
+isa_ok(
+	$EntityRequest->invoice,
+	'PayProp::API::Public::Client::Request::Entity::Invoice',
+);
+
 done_testing;

@@ -11,7 +11,7 @@ use PayProp::API::Public::Client::Authorization::APIKey;
 use_ok('PayProp::API::Public::Client::Request::Export');
 
 isa_ok(
-	my $ClientExport = PayProp::API::Public::Client::Request::Export->new(
+	my $ExportRequest = PayProp::API::Public::Client::Request::Export->new(
 		domain => 'mock.com',
 		authorization => PayProp::API::Public::Client::Authorization::APIKey->new( token => 'AgencyAPIKey' )
 	),
@@ -19,8 +19,13 @@ isa_ok(
 );
 
 isa_ok(
-	$ClientExport->beneficiaries,
+	$ExportRequest->beneficiaries,
 	'PayProp::API::Public::Client::Request::Export::Beneficiaries',
+);
+
+isa_ok(
+	$ExportRequest->tenants,
+	'PayProp::API::Public::Client::Request::Export::Tenants',
 );
 
 done_testing;
