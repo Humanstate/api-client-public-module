@@ -1,6 +1,6 @@
 # PayProp API Public Module
 
-The PayProp API Public Module is a standalone module that will allow you to interact with the PayProp API through a normalised interface. This interface abstracts authentication methods, request and response building and more.
+The PayProp API Public Module is a standalone module that will allow you to interact with the PayProp API, through a normalised interface. This interface abstracts authentication methods, request and response building and more.
 
 ## Setup and running
 
@@ -15,7 +15,7 @@ sudo cpan App::cpanminus # if you do not already have cpanm installed
 sudo cpanm --installdeps .
 ```
 
-### Run Interface via APIkey
+### Run via APIkey
 
 ```perl
 use PayProp::API::Public::Client;
@@ -44,7 +44,7 @@ $Beneficiaries
 ;
 ```
 
-### Setup Interface via OAuth v2.0 Client (access token)
+### Run via OAuth v2.0 Client (access token)
 
 ```perl
 use PayProp::API::Public::Client;
@@ -65,7 +65,7 @@ my $Client = PayProp::API::Public::Client->new(
 
         storage => PayProp::API::Public::Client::Authorization::Storage::Memcached->new(
         servers => [ qw/ 127.0.0.1:11211 / ], # Required: List of memcached servers.
-        encryption_secret => 'your-encryption-key',
+        encryption_secret => 'your-optional-encryption-key',
     ),
  ),
 );
