@@ -23,6 +23,5 @@ on test => sub {
     requires 'FindBin';
     requires 'JSON::PP';
     requires 'lib';
-    requires 'Test::Emulator';
     requires 'Test::Most';
 };
