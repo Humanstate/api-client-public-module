@@ -1,21 +1,10 @@
-# PayProp API Public Module
+# NAME
 
-The PayProp API Public Module is a standalone module that will allow you to interact with the PayProp API, through a normalised interface. This interface abstracts authentication methods, request and response building and more.
+PayProp::API::Public::Client - PayProp API client.
 
-## Setup and running
+## SYNOPSIS
 
-The interface requires a couple of CPAN modules.
-
-### Install necessary perl modules
-
-Note if you are not using the system perl you shouldn't need to prefix the two commands below with `sudo`.
-
-```bash
-sudo cpan App::cpanminus # if you do not already have cpanm installed
-sudo cpanm --installdeps .
-```
-
-### Run via APIkey
+### APIkey
 
 ```perl
 use PayProp::API::Public::Client;
@@ -23,10 +12,10 @@ use PayProp::API::Public::Client::Authorization::APIKey;
 
 my $Client = PayProp::API::Public::Client->new(
     scheme => 'https',
-    domain => 'https://staging-api.payprop.com', # use relevant PayProp API domain
+    domain => 'https://staging-api.payprop.com', # relevant PayProp API domain
 
     authorization => PayProp::API::Public::Client::Authorization::APIKey->new(
-        token => 'MTY5ODA5NTE5My01V3ghXDowcHdFa2k3SVprc3hhblUnYWIuOi9VZSlCag=='
+        token => 'API_KEY_HERE'
     ),
 );
 
@@ -53,19 +42,20 @@ use PayProp::API::Public::Client::Authorization::Storage::Memcached;
 
 my $Client = PayProp::API::Public::Client->new(
     scheme => 'https',
-    domain => 'https://staging-api.payprop.com', # use relevant PayProp API domain
+    domain => 'https://staging-api.payprop.com', # relevant PayProp API domain
 
     authorization => PayProp::API::Public::Client::Authorization::ClientCredentials->new(
         scheme => 'https',
         domain => 'https://staging-api.payprop.com', # use relevant PayProp API domain
 
-        client => 'YourPayPropAuth2ClientID',
+        client => 'YourPayPropClientID',
         secret => 'your-payprop-oauth2-client-id-secret',
-        application_user_id => 'application-user-id-of-the-agency-or-agent',
+        application_user_id => '123',
 
         storage => PayProp::API::Public::Client::Authorization::Storage::Memcached->new(
-        servers => [ qw/ 127.0.0.1:11211 / ], # Required: List of memcached servers.
+        servers => [ qw/ memcached:11211 / ], # Required: List of memcached servers.
         encryption_secret => 'your-optional-encryption-key',
+        throw_on_storage_unavailable => 1,
     ),
  ),
 );
@@ -82,4 +72,27 @@ $Beneficiaries
     } )
     ->wait
 ;
+```
+
+## Description
+
+The PayProp API Public Module is a standalone module that will allow you to interact with the PayProp API, through a normalised interface. This interface abstracts authentication methods, request and response building and more.
+
+It is the core module that *should* be used to access various API requests as defined in `PayProp::API::Public::Client::Request::`.
+
+
+# AUTHOR & CONTRIBUTORS
+
+Yanga Kandeni - `yangak@cpan.org`
+
+Valters Skrupskis - `malishew@cpan.org`
+
+# LICENSE
+
+This module is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself. If you would like to contribute documentation
+or file a bug report then please raise an issue / pull request:
+
+```bash
+https://github.com/Humanstate/api-client-public-module
 ```
