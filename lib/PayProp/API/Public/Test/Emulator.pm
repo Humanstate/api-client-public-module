@@ -5,7 +5,6 @@ use warnings;
 
 use Mouse;
 use Parallel::ForkManager;
-# use Test::Constants qw/ $GG_WWW /;
 use Time::HiRes qw/ gettimeofday tv_interval usleep /;
 use IO::Socket::INET;
 use POSIX qw( :sys_wait_h );
