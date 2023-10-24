@@ -5,7 +5,7 @@ use warnings;
 
 use JSON::PP;
 use Test::Most;
-use Test::Emulator;
+use Test::PayProp::API::Public::Emulator;
 
 use PayProp::API::Public::Client::Authorization::APIKey;
 
@@ -15,7 +15,7 @@ use_ok('PayProp::API::Public::Client::Request::Export::Tenants');
 my $SCHEME = 'http';
 my $EMULATOR_HOST = '127.0.0.1';
 
-my $Emulator = Test::Emulator->new(
+my $Emulator = Test::PayProp::API::Public::Emulator->new(
 	scheme => 'http',
 	exec => 'payprop_api_client.pl',
 	host => $EMULATOR_HOST,

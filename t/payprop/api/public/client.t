@@ -4,19 +4,15 @@ use strict;
 use warnings;
 
 use Test::Most;
-use FindBin qw/ $Bin /;
 
-use lib "$Bin/../lib";
-
-use PayProp::API::Public::Test::Emulator;
+use Test::PayProp::API::Public::Emulator;
 use PayProp::API::Public::Client::Authorization::APIKey;
 use PayProp::API::Public::Client::Authorization::ClientCredentials;
-
 
 my $SCHEME = 'http';
 my $EMULATOR_HOST = '127.0.0.1';
 
-my $Emulator = PayProp::API::Public::Test::Emulator->new(
+my $Emulator = Test::PayProp::API::Public::Emulator->new(
 	scheme => $SCHEME,
 	host => $EMULATOR_HOST,
 	exec => 'payprop_api_client.pl',

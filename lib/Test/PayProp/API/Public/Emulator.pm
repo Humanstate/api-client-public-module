@@ -1,4 +1,4 @@
-package PayProp::API::Public::Test::Emulator;
+package Test::PayProp::API::Public::Emulator;
 
 use strict;
 use warnings;
