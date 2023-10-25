@@ -260,7 +260,7 @@ sub _get_export_beneficiaries {
 	if ( $params->%* ) {
 		my ( $filter_by, $filter_value ) = %$params;
 
-		@mock_data = grep { $_->{ $filter_by } eq $filter_value } @mock_data;
+		@mock_data = grep { $_->{ $filter_by } // '' eq $filter_value } @mock_data;
 	}
 
 	my $mock_results_count = scalar @mock_data;

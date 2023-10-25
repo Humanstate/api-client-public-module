@@ -22,7 +22,7 @@ subtest 'Memcached - No server available; throw on connection failure' => sub {
 
 	isa_ok(
 		my $Memcached = PayProp::API::Public::Client::Authorization::Storage::Memcached->new(
-			servers => [ '127.0.0.1:999999' ],
+			servers => [ '127.0.0.1:0' ],
 			encryption_secret => 'bleh blurp berp',
 			throw_on_storage_unavailable => 1,
 		),
@@ -36,6 +36,7 @@ subtest 'Memcached - No server available; throw on connection failure' => sub {
 
 			like "$exception", qr/ping failed/;
 		} )
+		->wait
 	;
 
 };
