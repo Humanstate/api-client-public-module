@@ -7,6 +7,7 @@ use Mojolicious::Lite;
 
 use JSON::PP;
 
+$ENV{MOJO_LOG_LEVEL} //= 'debug';
 
 app->secrets([ int( rand( 1_000_000 ) ) . time . int( rand( 1_000_000 ) ) ]);
 
