@@ -1,5 +1,5 @@
 {
-   "abstract" : "Blah blah blah",
+   "abstract" : "PayProp API client",
    "author" : [
       "Yanga Kandeni <yangak@cpan.org>"
    ],
@@ -37,17 +37,51 @@
       },
       "runtime" : {
          "requires" : {
-            "perl" : "5.012"
+            "Cache::Memcached" : "0",
+            "Crypt::CBC" : "0",
+            "IO::Socket::INET" : "0",
+            "MIME::Base64" : "0",
+            "Module::Load" : "0",
+            "Mojo::Promise" : "0",
+            "Mojo::URL" : "0",
+            "Mojo::UserAgent" : "0",
+            "Mojolicious" : "0",
+            "Mouse" : "0",
+            "Mouse::Role" : "0",
+            "Mouse::Util::TypeConstraints" : "0",
+            "POSIX" : "0",
+            "Parallel::ForkManager" : "0",
+            "Time::HiRes" : "0",
+            "parent" : "0",
+            "strict" : "0",
+            "warnings" : "0"
          }
       },
       "test" : {
          "requires" : {
-            "Test::More" : "0.96"
+            "FindBin" : "0",
+            "JSON::PP" : "0",
+            "Test::Most" : "0",
+            "lib" : "0"
          }
       }
    },
    "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/Humanstate/api-client-public-module/issues"
+      },
+      "homepage" : "https://github.com/Humanstate/api-client-public-module",
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/Humanstate/api-client-public-module.git",
+         "web" : "https://github.com/Humanstate/api-client-public-module"
+      }
+   },
    "version" : "0.01",
+   "x_contributors" : [
+      "yangakandeni <kandeni.yanga@gmail.com>"
+   ],
    "x_generated_by_perl" : "v5.32.0",
    "x_serialization_backend" : "Cpanel::JSON::XS version 4.26",
    "x_spdx_expression" : "Artistic-1.0-Perl OR GPL-1.0-or-later",
