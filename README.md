@@ -2,7 +2,7 @@
 
 PayProp::API::Public::Client - PayProp API client.
 
-## SYNOPSIS
+# SYNOPSIS
 
 ### APIkey
 
@@ -74,18 +74,18 @@ $Beneficiaries
 ;
 ```
 
-## Description
+# Description
 
 The PayProp API Public Module is a standalone module that will allow you to interact with the PayProp API, through a normalised interface. This interface abstracts authentication methods, request and response building and more.
 
 It is the core module that *should* be used to access various API requests as defined in `PayProp::API::Public::Client::Request::`.
 
 
-# AUTHOR & CONTRIBUTORS
+# AUTHOR
 
-Yanga Kandeni - `yangak@cpan.org`
+Yanga Kandeni <yangak@cpan.org>
 
-Valters Skrupskis - `malishew@cpan.org`
+Valters Skrupskis <malishew@cpan.org>
 
 # LICENSE
 
@@ -96,3 +96,7 @@ or file a bug report then please raise an issue / pull request:
 ```bash
 https://github.com/Humanstate/api-client-public-module
 ```
+
+# COPYRIGHT
+
+Copyright 2023- PayProp

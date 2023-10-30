@@ -8,6 +8,48 @@ with qw/ PayProp::API::Public::Client::Role::Attribute::UA /;
 with qw/ PayProp::API::Public::Client::Role::Attribute::Domain /;
 with qw/ PayProp::API::Public::Client::Role::Attribute::Authorization /;
 
+our $VERSION = '0.01';
+
+has export => (
+	is => 'ro',
+	isa => 'PayProp::API::Public::Client::Request::Export',
+	lazy => 1,
+	default => sub {
+		my ( $self ) = @_;
+
+		require PayProp::API::Public::Client::Request::Export;
+		return PayProp::API::Public::Client::Request::Export->new(
+			ua => $self->ua,
+			domain => $self->domain,
+			scheme => $self->scheme,
+			authorization => $self->authorization,
+		);
+	}
+);
+
+has entity => (
+	is => 'ro',
+	isa => 'PayProp::API::Public::Client::Request::Entity',
+	lazy => 1,
+	default => sub {
+		my ( $self ) = @_;
+
+		require PayProp::API::Public::Client::Request::Entity;
+		return PayProp::API::Public::Client::Request::Entity->new(
+			ua => $self->ua,
+			domain => $self->domain,
+			scheme => $self->scheme,
+			authorization => $self->authorization,
+		);
+	}
+);
+
+__PACKAGE__->meta->make_immutable;
+
+__END__
+
+=encoding utf-8
+
 =head1 NAME
 
 	PayProp::API::Public::Client - PayProp API client.
@@ -65,41 +107,19 @@ with qw/ PayProp::API::Public::Client::Role::Attribute::Authorization /;
 PayProp API client - this is the core module that *should* be used to access various
 API requests as defined in C<PayProp::API::Public::Client::Request::*>.
 
+=head1 AUTHOR
+
+Yanga Kandeni E<lt>yangak@cpan.orgE<gt>
+
+Valters Skrupskis E<lt>malishew@cpan.orgE<gt>
+
+=head1 COPYRIGHT
+
+Copyright 2023- PayProp
+
+=head1 LICENSE
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
 =cut
-
-has export => (
-	is => 'ro',
-	isa => 'PayProp::API::Public::Client::Request::Export',
-	lazy => 1,
-	default => sub {
-		my ( $self ) = @_;
-
-		require PayProp::API::Public::Client::Request::Export;
-		return PayProp::API::Public::Client::Request::Export->new(
-			ua => $self->ua,
-			domain => $self->domain,
-			scheme => $self->scheme,
-			authorization => $self->authorization,
-		);
-	}
-);
-
-has entity => (
-	is => 'ro',
-	isa => 'PayProp::API::Public::Client::Request::Entity',
-	lazy => 1,
-	default => sub {
-		my ( $self ) = @_;
-
-		require PayProp::API::Public::Client::Request::Entity;
-		return PayProp::API::Public::Client::Request::Entity->new(
-			ua => $self->ua,
-			domain => $self->domain,
-			scheme => $self->scheme,
-			authorization => $self->authorization,
-		);
-	}
-);
-
-__PACKAGE__->meta->make_immutable;
-
