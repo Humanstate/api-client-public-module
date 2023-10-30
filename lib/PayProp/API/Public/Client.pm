@@ -8,6 +8,7 @@ with qw/ PayProp::API::Public::Client::Role::Attribute::UA /;
 with qw/ PayProp::API::Public::Client::Role::Attribute::Domain /;
 with qw/ PayProp::API::Public::Client::Role::Attribute::Authorization /;
 
+# ABSTRACT: PayProp API client
 our $VERSION = '0.01';
 
 has export => (
@@ -56,56 +57,78 @@ __END__
 
 =head1 SYNOPSIS
 
+=head2 APIkey
+
 	use PayProp::API::Public::Client;
 	use PayProp::API::Public::Client::Authorization::APIKey;
-	use PayProp::API::Public::Client::Authorization::ClientCredentials;
-	use PayProp::API::Public::Client::Authorization::Storage::Memcached;
 
 	my $Client = PayProp::API::Public::Client->new(
-		domain => 'paypropdev.payprop.com',
-		authorization => PayProp::API::Public::Client::Authorization::ClientCredentials->new(
-			secret => 's3cr3t123',
-			client => 'PayProp',
-			application_user_id => 123,
-			domain => 'uk.payprop.com',
-			storage => PayProp::API::Public::Client::Authorization::Storage::Memcached->new(
-				servers => [ qw/ memcached:11211 / ],
-				encryption_secret => 's3cr3t123',
-				throw_on_storage_unavailable => 1,
-			),
-		),
-	);
+		scheme => 'https',
+		domain => 'https://staging-api.payprop.com', # relevant PayProp API domain
 
-	-or-
-
-	my $Client = PayProp::API::Public::Client->new(
-		domain => 'uk.payprop.com',
 		authorization => PayProp::API::Public::Client::Authorization::APIKey->new(
-			token => 'API_KEY_HERE',
+			token => 'API_KEY_HERE'
 		),
 	);
 
-	------------------------------------------------------------------
+	# export beneficiaries example
+	my $Export = $Client->export;
+	my $Beneficiaries = $Export->beneficiaries;
 
-	$Client
-		->export
-		->beneficiaries
+	$Beneficiaries
 		->list_p
 		->then( sub {
 			my ( $beneficiaries ) = @_;
-			print "Items: " . scalar( $beneficiaries->@* ) . "\n";
-		} )
-		->catch( sub {
-			my ( $Exception ) = @_;
-			warn "$Exception";
+			# TODO: do something with list of PayProp::API::Public::Client::Response::Export::Beneficiary objects
 		} )
 		->wait
 	;
 
+=head2 OAuth v2.0 Client (access token)
+
+	use PayProp::API::Public::Client;
+	use PayProp::API::Public::Client::Authorization::ClientCredentials;
+	use PayProp::API::Public::Client::Authorization::Storage::Memcached;
+
+	my $Client = PayProp::API::Public::Client->new(
+		scheme => 'https',
+		domain => 'https://staging-api.payprop.com', # relevant PayProp API domain
+
+		authorization => PayProp::API::Public::Client::Authorization::ClientCredentials->new(
+			scheme => 'https',
+			domain => 'https://staging-api.payprop.com', # use relevant PayProp API domain
+
+			client => 'YourPayPropClientID',
+			secret => 'your-payprop-oauth2-client-id-secret',
+			application_user_id => '123',
+
+			storage => PayProp::API::Public::Client::Authorization::Storage::Memcached->new(
+			servers => [ qw/ memcached:11211 / ], # Required: List of memcached servers.
+			encryption_secret => 'your-optional-encryption-key',
+			throw_on_storage_unavailable => 1,
+		),
+	);
+
+	# export beneficiaries example
+	my $Export = $Client->export;
+	my $Beneficiaries = $Export->beneficiaries;
+
+	$Beneficiaries
+		->list_p
+		->then( sub {
+			my ( $beneficiaries ) = @_;
+			# TODO: do something with list of PayProp::API::Public::Client::Response::Export::Beneficiary objects
+		} )
+		->wait
+	;
+
+
 =head1 DESCRIPTION
 
-PayProp API client - this is the core module that *should* be used to access various
-API requests as defined in C<PayProp::API::Public::Client::Request::*>.
+The PayProp API Public Module is a standalone module that will allow you to interact with the PayProp API,
+through a normalised interface. This interface abstracts authentication methods, request and response building and more.
+
+This module B<should> be used to access various API requests as defined in C<PayProp::API::Public::Client::Request::*>.
 
 =head1 AUTHOR
 
@@ -122,4 +145,11 @@ Copyright 2023- PayProp
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
+If you would like to contribute documentation
+or file a bug report then please raise an issue / pull request:
+
+L<https://github.com/Humanstate/api-client-public-module>
+
 =cut
+
+
