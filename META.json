@@ -1,5 +1,5 @@
 {
-   "abstract" : "PayProp API client",
+   "abstract" : "PayProp API Public Client",
    "author" : [
       "Yanga Kandeni <yangak@cpan.org>"
    ],
@@ -78,7 +78,7 @@
          "web" : "https://github.com/Humanstate/api-client-public-module"
       }
    },
-   "version" : "0.01",
+   "version" : "0.02",
    "x_contributors" : [
       "yangakandeni <kandeni.yanga@gmail.com>"
    ],

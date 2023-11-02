@@ -9,22 +9,6 @@ with qw/ PayProp::API::Public::Client::Role::Storage /;
 use Mojo::Promise;
 use Cache::Memcached;
 
-=head1 NAME
-
-	PayProp::API::Public::Client::Authorization::Storage::Memcached - Memcached storage solution.
-
-=head1 SYNOPSIS
-
-	my $MemcachedStorage = PayProp::API::Public::Client::Authorization::Storage::Memcached->new(
-		servers => [ '127.0.0.1:11211' ], # Required: List of memcached servers.
-	);
-
-=head1 DESCRIPTION
-
-Memcached storage solution to be provided for C<PayProp::API::Public::Client::Authorization::*>.
-
-=cut
-
 has servers => (
 	is => 'ro',
 	isa => 'ArrayRef[Str]',
@@ -118,3 +102,61 @@ sub _delete {
 }
 
 __PACKAGE__->meta->make_immutable;
+
+
+__END__
+
+=encoding utf-8
+
+
+=head1 NAME
+
+	PayProp::API::Public::Client::Authorization::Storage::Memcached - Memcached storage solution.
+
+=head1 SYNOPSIS
+
+	use PayProp::API::Public::Client::Authorization::Storage::Memcached;
+
+	my $MemcachedStorage = PayProp::API::Public::Client::Authorization::Storage::Memcached->new(
+		servers => [ '127.0.0.1:11211' ], # Required: List of memcached servers.
+		encryption_secret => 'bleh blurp berp',
+		throw_on_storage_unavailable => 1,
+	);
+
+=head1 DESCRIPTION
+
+	Memcached storage solution to be provided for C<PayProp::API::Public::Client::Authorization::*>.
+
+=head1 ATTRIBUTES
+
+	C<PayProp::API::Public::Client::Authorization::Storage::Memcached> implements the following attributes.
+
+=head2 servers
+
+	List of memcached servers.
+
+=head2 Memcached
+
+	Client library for memcached.
+
+=head1 AUTHOR
+
+	Yanga Kandeni E<lt>yangak@cpan.orgE<gt>
+
+	Valters Skrupskis E<lt>malishew@cpan.orgE<gt>
+
+=head1 COPYRIGHT
+
+	Copyright 2023- PayProp
+
+=head1 LICENSE
+
+	This library is free software; you can redistribute it and/or modify
+	it under the same terms as Perl itself.
+
+	If you would like to contribute documentation
+	or file a bug report then please raise an issue / pull request:
+
+	L<https://github.com/Humanstate/api-client-public-module>
+
+=cut
