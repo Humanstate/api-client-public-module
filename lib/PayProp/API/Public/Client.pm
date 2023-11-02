@@ -9,7 +9,7 @@ with qw/ PayProp::API::Public::Client::Role::Attribute::Domain /;
 with qw/ PayProp::API::Public::Client::Role::Attribute::Authorization /;
 
 # ABSTRACT: PayProp API Public Client
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 has export => (
 	is => 'ro',
