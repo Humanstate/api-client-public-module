@@ -6,3 +6,6 @@ local
 MYMETA.*
 !META.json
 /.prove
+/.vstags
+cspell*
+/blib

@@ -6,75 +6,16 @@ use parent qw/ Exception::Class::Base /;
 
 use Module::Load qw//;
 
-=head1 NAME
-
-	PayProp::API::Public::Client::Exception::Base - Base module for exceptions.
-
-=head1 SYNOPSIS
-
-	{
-		package PayProp::API::Public::Client::Exception::Custom;
-		use parent qw/ PayProp::API::Public::Client::Exception::Base /;
-
-		# Optional error class to construct C<errors> field.
-		sub error_class { 'PayProp::API::Public::Client::Error::Custom' }
-
-		# Optional error fields as defined in C<PayProp::API::Public::Client::Error::Custom>
-		sub error_fields { qw/ custom_field_1 / }
-
-		1;
-	}
-
-	PayProp::API::Public::Client::Exception::Custom->throw(
-		status_code => 500,
-		errors => [
-			{ custom_field_1 => 'Hello' },
-		],
-	);
-
-=head1 DESCRIPTION
-
-*DO NOT INSTANTIATE THIS MODULE DIRECTLY*
-
-This is a base exception module from which specific exceptions are extended. For new exception
-types use this module as a parent.
-
-See C<PayProp::API::Public::Client::Exception::*> for examples.
-
-=cut
-
-=head2 error_class
-
-Can be optionally overridden in C<PayProp::API::Public::Client::Exception::*>.
-
-=cut
 
 sub error_class { undef }
 
-=head2 error_fields
-
-Can be optionally overridden in C<PayProp::API::Public::Client::Exception::*>.
-
-=cut
-
 sub error_fields { undef }
 
-=head2 throw
+sub errors { shift->{errors} }
 
-Main method to call to throw an exception from C<PayProp::API::Public::Client::Exception::*>.
+sub status_code { shift->{status_code} }
 
-	PayProp::API::Public::Client::Exception::Custom->throw('I am an exception!');
-
-	or
-
-	PayProp::API::Public::Client::Exception::Custom->throw(
-		status_code => 500,
-		errors => [
-			{ custom_field_1 => 'Hello' },
-		],
-	);
-
-=cut
+sub Fields { qw/ status_code errors / } # for Exception::Class::Base
 
 sub throw {
 	my ( $self, @args ) = @_;
@@ -113,58 +54,6 @@ sub throw {
 	$self->SUPER::throw( %args );
 }
 
-=head2 errors
-
-Return instances of C<PayProp::API::Public::Client::Error::*>, if defined.
-
-	my $errors = PayProp::API::Public::Client::Exception::Custom->errors;
-
-=cut
-
-sub errors { shift->{errors} }
-
-=head2 status_code
-
-Return exception status code, if defined.
-
-	my $status_code = PayProp::API::Public::Client::Exception::Custom->status_code;
-
-=cut
-
-sub status_code { shift->{status_code} }
-
-=head2 Fields
-
-To be extended for additional fields to be available on C<PayProp::API::Public::Client::Exception::*>.
-
-=cut
-
-sub Fields { qw/ status_code errors / } # for Exception::Class::Base
-
-=head2 to_hashref
-
-Convert C<PayProp::API::Public::Client::Exception::*> to hashref, in place for easier debugging.
-
-	my $error_ref = PayProp::API::Public::Client::Exception::Custom->to_hashref;
-
-Return:
-
-	{
-		class => 'PayProp::API::Public::Client::Exception::Custom',
-		message => 'Given message',
-		status_code => 500,
-		errors => [
-			{
-				class => 'PayProp::API::Public::Client::Error::Custom',
-				fields => {
-					custom_field_1 => 'Hello',
-				},
-			},
-		],
-	}
-
-=cut
-
 sub to_hashref {
 	my ( $self ) = @_;
 
@@ -187,3 +76,111 @@ sub to_hashref {
 }
 
 1;
+
+__END__
+
+=encoding utf-8
+
+=head1 NAME
+
+	PayProp::API::Public::Client::Exception::Base - Base module for exceptions.
+
+=head1 SYNOPSIS
+
+	{
+		package PayProp::API::Public::Client::Exception::Custom;
+		use parent qw/ PayProp::API::Public::Client::Exception::Base /;
+
+		# Optional error class to construct C<errors> field.
+		sub error_class { 'PayProp::API::Public::Client::Error::Custom' }
+
+		# Optional error fields as defined in C<PayProp::API::Public::Client::Error::Custom>
+		sub error_fields { qw/ custom_field_1 / }
+
+		1;
+	}
+
+	PayProp::API::Public::Client::Exception::Custom->throw(
+		status_code => 500,
+		errors => [
+			{ custom_field_1 => 'Hello' },
+		],
+	);
+
+=head1 DESCRIPTION
+
+*DO NOT INSTANTIATE THIS MODULE DIRECTLY*
+
+This is a base exception module from which specific exceptions are extended. For new exception
+types use this module as a parent.
+
+See C<PayProp::API::Public::Client::Exception::*> for examples.
+
+=head1 METHODS
+
+=head2 error_class
+
+Can be optionally overridden in C<PayProp::API::Public::Client::Exception::*>.
+
+=head2 error_fields
+
+Can be optionally overridden in C<PayProp::API::Public::Client::Exception::*>.
+
+=head2 throw
+
+Main method to call to throw an exception from C<PayProp::API::Public::Client::Exception::*>.
+
+	my $Exception = PayProp::API::Public::Client::Exception::Custom->throw('I am an exception!');
+
+	or
+
+	my $Exception = PayProp::API::Public::Client::Exception::Custom->throw(
+		status_code => 500,
+		errors => [
+			{ custom_field_1 => 'Hello' },
+		],
+	);
+
+=head2 errors
+
+Return instances of C<PayProp::API::Public::Client::Error::*>, if defined.
+
+	my $errors = PayProp::API::Public::Client::Exception::Custom->errors;
+
+=head2 status_code
+
+Return exception status code, if defined.
+
+	my $status_code = PayProp::API::Public::Client::Exception::Custom->status_code;
+
+=head2 Fields
+
+To be extended for additional fields to be available on C<PayProp::API::Public::Client::Exception::*>.
+
+=head2 to_hashref
+
+	Convert C<PayProp::API::Public::Client::Exception::*> to hashref, in place for easier debugging.
+
+	my $error_ref = PayProp::API::Public::Client::Exception::Custom->to_hashref;
+
+=head1 AUTHOR
+
+Yanga Kandeni E<lt>yangak@cpan.orgE<gt>
+
+Valters Skrupskis E<lt>malishew@cpan.orgE<gt>
+
+=head1 COPYRIGHT
+
+Copyright 2023- PayProp
+
+=head1 LICENSE
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+If you would like to contribute documentation
+or file a bug report then please raise an issue / pull request:
+
+L<https://github.com/Humanstate/api-client-public-module>
+
+=cut

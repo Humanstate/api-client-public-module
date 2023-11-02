@@ -1,6 +1,6 @@
 # NAME
 
-        PayProp::API::Public::Client - PayProp API client.
+PayProp::API::Public::Client - PayProp API client.
 
 # SYNOPSIS
 
@@ -19,14 +19,14 @@
         );
 
         # export beneficiaries example
-        my $Export = $Client->export;
-        my $Beneficiaries = $Export->beneficiaries;
+        my $export = $Client->export;
+        my $beneficiaries_export = $export->beneficiaries;
 
-        $Beneficiaries
+        $beneficiaries_export
                 ->list_p
                 ->then( sub {
-                        my ( $beneficiaries ) = @_;
-                        # TODO: do something with list of PayProp::API::Public::Client::Response::Export::Beneficiary objects
+                        my ( \@beneficiaries ) = @_;
+                        ...;
                 } )
                 ->wait
         ;
@@ -39,59 +39,100 @@
 
         my $Client = PayProp::API::Public::Client->new(
                 scheme => 'https',
-                domain => 'https://staging-api.payprop.com', # relevant PayProp API domain
+                domain => 'API_DOMAIN.com',                                                        # relevant PayProp API domain
 
                 authorization => PayProp::API::Public::Client::Authorization::ClientCredentials->new(
                         scheme => 'https',
-                        domain => 'https://staging-api.payprop.com', # use relevant PayProp API domain
+                        domain => 'API_DOMAIN.com',                                                     # use relevant PayProp API domain
 
                         client => 'YourPayPropClientID',
                         secret => 'your-payprop-oauth2-client-id-secret',
                         application_user_id => '123',
 
                         storage => PayProp::API::Public::Client::Authorization::Storage::Memcached->new(
-                        servers => [ qw/ memcached:11211 / ], # Required: List of memcached servers.
-                        encryption_secret => 'your-optional-encryption-key',
-                        throw_on_storage_unavailable => 1,
+                                servers => [ qw/ memcached:11211 / ],                                       # Required: List of memcached servers.
+                                encryption_secret => 'your-optional-encryption-key',
+                                throw_on_storage_unavailable => 1,
+                        ),
                 ),
         );
 
         # export beneficiaries example
         my $Export = $Client->export;
-        my $Beneficiaries = $Export->beneficiaries;
+        my $beneficiaries_export = $Export->beneficiaries;
 
-        $Beneficiaries
+        $beneficiaries_export
                 ->list_p
                 ->then( sub {
-                        my ( $beneficiaries ) = @_;
-                        # TODO: do something with list of PayProp::API::Public::Client::Response::Export::Beneficiary objects
+                        my ( \@beneficiaries ) = @_;
+                        ...;
                 } )
                 ->wait
         ;
 
 # DESCRIPTION
 
-The PayProp API Public Module is a standalone module that will allow you to interact with the PayProp API,
-through a normalised interface. This interface abstracts authentication methods, request and response building and more.
+        The PayProp API Public Module is a standalone module that will allow you to interact with the PayProp API,
+        through a normalised interface. This interface abstracts authentication methods, request and response building and more.
 
-This module **should** be used to access various API requests as defined in `PayProp::API::Public::Client::Request::*`.
+        This module B<should> be used to access various API requests as defined in C<PayProp::API::Public::Client::Request::*>.
+
+# ATTRIBUTES
+
+        C<PayProp::API::Public::Client> implements the following attributes.
+
+## export
+
+        my $Export = $Client->export;
+        my $beneficiaries_export = $Export->beneficiaries;
+
+        See L<PayProp::API::Public::Client::Request::Export> for available attributes.
+
+## entity
+
+        my $Entity = $Client->entity;
+        my $payment_entity = $Entity->payment;
+
+        See L<PayProp::API::Public::Client::Request::Entity> for available attributes.
+
+# METHODS
+
+# ATTRIBUTES
+
+`PayProp::API::Public::Client` implements the following attributes.
+
+## export
+
+        my $Export = $Client->export;
+        my $beneficiaries_export = $Export->beneficiaries;
+
+See [PayProp::API::Public::Client::Request::Export](https://metacpan.org/pod/PayProp%3A%3AAPI%3A%3APublic%3A%3AClient%3A%3ARequest%3A%3AExport) for available attributes.
+
+## entity
+
+        my $Entity = $Client->entity;
+        my $payment_entity = $Entity->payment;
+
+See [PayProp::API::Public::Client::Request::Entity](https://metacpan.org/pod/PayProp%3A%3AAPI%3A%3APublic%3A%3AClient%3A%3ARequest%3A%3AEntity) for available attributes.
+
+# METHODS
 
 # AUTHOR
 
-Yanga Kandeni <yangak@cpan.org>
+        Yanga Kandeni E<lt>yangak@cpan.orgE<gt>
 
-Valters Skrupskis <malishew@cpan.org>
+        Valters Skrupskis E<lt>malishew@cpan.orgE<gt>
 
 # COPYRIGHT
 
-Copyright 2023- PayProp
+        Copyright 2023- PayProp
 
 # LICENSE
 
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+        This library is free software; you can redistribute it and/or modify
+        it under the same terms as Perl itself.
 
-If you would like to contribute documentation
-or file a bug report then please raise an issue / pull request:
+        If you would like to contribute documentation
+        or file a bug report then please raise an issue / pull request:
 
-[https://github.com/Humanstate/api-client-public-module](https://github.com/Humanstate/api-client-public-module)
+        L<https://github.com/Humanstate/api-client-public-module>

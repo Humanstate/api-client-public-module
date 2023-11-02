@@ -1,5 +1,5 @@
 {
-   "abstract" : "PayProp API client",
+   "abstract" : "PayProp API Public Client",
    "author" : [
       "Yanga Kandeni <yangak@cpan.org>"
    ],
