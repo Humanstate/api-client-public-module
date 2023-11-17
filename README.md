@@ -72,30 +72,10 @@ PayProp::API::Public::Client - PayProp API client.
 
 # DESCRIPTION
 
-        The PayProp API Public Module is a standalone module that will allow you to interact with the PayProp API,
-        through a normalised interface. This interface abstracts authentication methods, request and response building and more.
+The PayProp API Public Module is a standalone module that will allow you to interact with the PayProp API,
+through a normalised interface. This interface abstracts authentication methods, request and response building and more.
 
-        This module B<should> be used to access various API requests as defined in C<PayProp::API::Public::Client::Request::*>.
-
-# ATTRIBUTES
-
-        C<PayProp::API::Public::Client> implements the following attributes.
-
-## export
-
-        my $Export = $Client->export;
-        my $beneficiaries_export = $Export->beneficiaries;
-
-        See L<PayProp::API::Public::Client::Request::Export> for available attributes.
-
-## entity
-
-        my $Entity = $Client->entity;
-        my $payment_entity = $Entity->payment;
-
-        See L<PayProp::API::Public::Client::Request::Entity> for available attributes.
-
-# METHODS
+This module **should** be used to access various API requests as defined in `PayProp::API::Public::Client::Request::*`.
 
 # ATTRIBUTES
 
@@ -115,24 +95,40 @@ See [PayProp::API::Public::Client::Request::Export](https://metacpan.org/pod/Pay
 
 See [PayProp::API::Public::Client::Request::Entity](https://metacpan.org/pod/PayProp%3A%3AAPI%3A%3APublic%3A%3AClient%3A%3ARequest%3A%3AEntity) for available attributes.
 
-# METHODS
+# ATTRIBUTES
+
+`PayProp::API::Public::Client` implements the following attributes.
+
+## export
+
+        my $Export = $Client->export;
+        my $beneficiaries_export = $Export->beneficiaries;
+
+See [PayProp::API::Public::Client::Request::Export](https://metacpan.org/pod/PayProp%3A%3AAPI%3A%3APublic%3A%3AClient%3A%3ARequest%3A%3AExport) for available attributes.
+
+## entity
+
+        my $Entity = $Client->entity;
+        my $payment_entity = $Entity->payment;
+
+See [PayProp::API::Public::Client::Request::Entity](https://metacpan.org/pod/PayProp%3A%3AAPI%3A%3APublic%3A%3AClient%3A%3ARequest%3A%3AEntity) for available attributes.
 
 # AUTHOR
 
-        Yanga Kandeni E<lt>yangak@cpan.orgE<gt>
+Yanga Kandeni <yangak@cpan.org>
 
-        Valters Skrupskis E<lt>malishew@cpan.orgE<gt>
+Valters Skrupskis <malishew@cpan.org>
 
 # COPYRIGHT
 
-        Copyright 2023- PayProp
+Copyright 2023- PayProp
 
 # LICENSE
 
-        This library is free software; you can redistribute it and/or modify
-        it under the same terms as Perl itself.
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
 
-        If you would like to contribute documentation
-        or file a bug report then please raise an issue / pull request:
+If you would like to contribute documentation
+or file a bug report then please raise an issue / pull request:
 
-        L<https://github.com/Humanstate/api-client-public-module>
+[https://github.com/Humanstate/api-client-public-module](https://github.com/Humanstate/api-client-public-module)

@@ -83,7 +83,7 @@ __END__
 
 =head1 NAME
 
-	PayProp::API::Public::Client::Exception::Base - Base module for exceptions.
+PayProp::API::Public::Client::Exception::Base - Base module for exceptions.
 
 =head1 SYNOPSIS
 
@@ -159,7 +159,7 @@ To be extended for additional fields to be available on C<PayProp::API::Public::
 
 =head2 to_hashref
 
-	Convert C<PayProp::API::Public::Client::Exception::*> to hashref, in place for easier debugging.
+Convert C<PayProp::API::Public::Client::Exception::*> to hashref, in place for easier debugging.
 
 	my $error_ref = PayProp::API::Public::Client::Exception::Custom->to_hashref;
 

@@ -199,7 +199,7 @@ The customer ID is a unique, case-sensitive value per API consumer. The value ca
 
 =head2 description
 
-B<string> C<<= 255 characters>
+B<string> C<E<lt>= 255 characters>
 Invoice description.
 
 =head2 end_date
@@ -210,7 +210,7 @@ Invoice end date.
 =head2 frequency
 
 B<string>
-Enum: "O" "W" "2W" "4W" "M" "2M" "Q" "6M" "A"
+Enum: C<"O"> C<"W"> C<"2W"> C<"4W"> C<"M"> C<"2M"> C<"Q"> C<"6M"> C<"A">
 Invoice frequency. C<required>
 
 =head2 has_invoice_period
