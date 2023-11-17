@@ -275,7 +275,7 @@ To be used with L</"search_by">.
 
 =head2 external_id
 
-B<string> C<<= 32 characters>
+B<string> C<E<lt>= 32 characters>
 External ID of tenant.
 
 	$tenants_export
@@ -291,7 +291,7 @@ External ID of tenant.
 
 =head2 property_id
 
-B<string> C<<= 50 characters>
+B<string> C<E<lt>= 50 characters>
 External ID of property.
 
 	$tenants_export
@@ -323,7 +323,7 @@ Return only tenants that have been archived. Defaults to C<false>.
 
 =head2 customer_id
 
-B<string> C<<= 50 characters>
+B<string> C<E<lt>= 50 characters>
 Lookup entities based on C<customer_id>.
 
 	$tenants_export
@@ -339,7 +339,7 @@ Lookup entities based on C<customer_id>.
 
 =head2 customer_reference
 
-B<string> C<<= 50 characters>
+B<string> C<E<lt>= 50 characters>
 Customer reference of tenant.
 
 	$tenants_export

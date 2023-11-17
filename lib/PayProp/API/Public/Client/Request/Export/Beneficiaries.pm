@@ -299,7 +299,7 @@ Returns a list of L<PayProp::API::Public::Client::Response::Export::Beneficiary>
 
 =head2 external_id
 
-B<string> C<<= 32 characters>
+B<string> C<E<lt>= 32 characters>
 External ID of beneficiary.
 
 	$beneficiaries_export
@@ -315,7 +315,7 @@ Returns a list of L<PayProp::API::Public::Client::Response::Export::Beneficiary>
 
 =head2 bank_account_number
 
-B<string> C<<= 32 characters /^[a-zA-Z0-9]+$/>
+B<string> C<E<lt>= 32 characters /^[a-zA-Z0-9]+$/>
 Filter beneficiaries by bank account number.
 
 	$beneficiaries_export
@@ -331,7 +331,7 @@ Returns a list of L<PayProp::API::Public::Client::Response::Export::Beneficiary>
 
 =head2 bank_branch_code
 
-B<string> C<<= 32 characters /^[a-zA-Z0-9]+$/>
+B<string> C<E<lt>= 32 characters /^[a-zA-Z0-9]+$/>
 Filter beneficiaries by bank branch code.
 
 	$beneficiaries_export
@@ -363,7 +363,7 @@ Returns a list of L<PayProp::API::Public::Client::Response::Export::Beneficiary>
 
 =head2 customer_id
 
-B<string> C<<= 50 characters>
+B<string> C<E<lt>= 50 characters>
 Lookup entities based on C<customer_id>.
 
 	$beneficiaries_export
@@ -379,7 +379,7 @@ Returns a list of L<PayProp::API::Public::Client::Response::Export::Beneficiary>
 
 =head2 customer_reference
 
-B<string> C<<= 50 characters>
+B<string> C<E<lt>= 50 characters>
 Customer reference of beneficiary.
 
 	$beneficiaries_export
