@@ -45,6 +45,23 @@ has entity => (
 	}
 );
 
+has tags => (
+	is => 'ro',
+	isa => 'PayProp::API::Public::Client::Request::Tags',
+	lazy => 1,
+	default => sub {
+		my ( $self ) = @_;
+
+		require PayProp::API::Public::Client::Request::Tags;
+		return PayProp::API::Public::Client::Request::Tags->new(
+			ua => $self->ua,
+			domain => $self->domain,
+			scheme => $self->scheme,
+			authorization => $self->authorization,
+		);
+	}
+);
+
 __PACKAGE__->meta->make_immutable;
 
 __END__
@@ -149,23 +166,12 @@ See L<PayProp::API::Public::Client::Request::Export> for available attributes.
 
 See L<PayProp::API::Public::Client::Request::Entity> for available attributes.
 
-=head1 ATTRIBUTES
+=head2 tags
 
-C<PayProp::API::Public::Client> implements the following attributes.
+	my $Tags = $Client->tags;
+	my $Promise = $Entity->list_p;
 
-=head2 export
-
-	my $Export = $Client->export;
-	my $beneficiaries_export = $Export->beneficiaries;
-
-See L<PayProp::API::Public::Client::Request::Export> for available attributes.
-
-=head2 entity
-
-	my $Entity = $Client->entity;
-	my $payment_entity = $Entity->payment;
-
-See L<PayProp::API::Public::Client::Request::Entity> for available attributes.
+See L<PayProp::API::Public::Client::Request::Tags> for available methods.
 
 =head1 AUTHOR
 
@@ -188,5 +194,3 @@ or file a bug report then please raise an issue / pull request:
 L<https://github.com/Humanstate/api-client-public-module>
 
 =cut
-
-
