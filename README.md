@@ -95,23 +95,12 @@ See [PayProp::API::Public::Client::Request::Export](https://metacpan.org/pod/Pay
 
 See [PayProp::API::Public::Client::Request::Entity](https://metacpan.org/pod/PayProp%3A%3AAPI%3A%3APublic%3A%3AClient%3A%3ARequest%3A%3AEntity) for available attributes.
 
-# ATTRIBUTES
+## tags
 
-`PayProp::API::Public::Client` implements the following attributes.
+        my $Tags = $Client->tags;
+        my $Promise = $Tags->list_p;
 
-## export
-
-        my $Export = $Client->export;
-        my $beneficiaries_export = $Export->beneficiaries;
-
-See [PayProp::API::Public::Client::Request::Export](https://metacpan.org/pod/PayProp%3A%3AAPI%3A%3APublic%3A%3AClient%3A%3ARequest%3A%3AExport) for available attributes.
-
-## entity
-
-        my $Entity = $Client->entity;
-        my $payment_entity = $Entity->payment;
-
-See [PayProp::API::Public::Client::Request::Entity](https://metacpan.org/pod/PayProp%3A%3AAPI%3A%3APublic%3A%3AClient%3A%3ARequest%3A%3AEntity) for available attributes.
+See [PayProp::API::Public::Client::Request::Tags](https://metacpan.org/pod/PayProp%3A%3AAPI%3A%3APublic%3A%3AClient%3A%3ARequest%3A%3ATags) for available methods.
 
 # AUTHOR
 

@@ -2,6 +2,13 @@ Revision history for PayProp-API-Public-Client
 
 {{$NEXT}}
 
+0.04  2023-11-28 11:02:01 CEST
+
+        - Add `lib/PayProp/API/Public/Client/Request/Tags.pm` functionality.
+        - Major changes to how path parameters are provided.
+        - Introduce path parameter ordering.
+        - Refactoring of tests.
+
 0.03  2023-11-17 02:32:01 SAST
 
         - Fix documentation formatting and spelling errors.

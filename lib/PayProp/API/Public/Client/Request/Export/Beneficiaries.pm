@@ -20,7 +20,10 @@ has '+url' => (
 
 
 sub list_p {
-	my ( $self, $params ) = @_;
+	my ( $self, $args ) = @_;
+
+	$args //= {};
+	my $params = $args->{params};
 
 	return $self
 		->api_request_p({
@@ -123,28 +126,6 @@ sub _build_address {
 	);
 
 	return $Address;
-}
-
-sub _query_params {
-	my ( $self ) = @_;
-
-	return [
-		qw/
-			rows
-			page
-			owners
-			external_id
-			search_by
-			search_value
-			is_archived
-			customer_id
-			bank_branch_code
-			customer_reference
-			modified_from_time
-			bank_account_number
-			modified_from_timezone
-		/
-	];
 }
 
 __PACKAGE__->meta->make_immutable;

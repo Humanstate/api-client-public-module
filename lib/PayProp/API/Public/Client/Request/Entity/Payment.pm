@@ -17,18 +17,28 @@ has '+url' => (
 );
 
 sub list_p {
-	my ( $self, $params ) = @_;
+	my ( $self, $args ) = @_;
+
+	$args //= {};
+	my $params = $args->{params};
+	my $path_params = $args->{path_params};
+
+	$self->ordered_path_params([qw/ external_id /]);
 
 	return $self
 		->api_request_p({
 			params => $params,
+			path_params => $path_params,
 			handle_response_cb => sub { $self->_get_payment( @_ ) },
 		})
 	;
 }
 
 sub create_p {
-	my ( $self, $content ) = @_;
+	my ( $self, $args ) = @_;
+
+	$args //= {};
+	my $content = $args->{content};
 
 	return $self
 		->api_request_p({
@@ -40,12 +50,20 @@ sub create_p {
 }
 
 sub update_p {
-	my ( $self, $params, $content ) = @_;
+	my ( $self, $args ) = @_;
+
+	$args //= {};
+	my $params = $args->{params};
+	my $content = $args->{content};
+	my $path_params = $args->{path_params};
+
+	$self->ordered_path_params([qw/ external_id /]);
 
 	return $self
 		->api_request_p({
 			method => 'PUT',
 			params => $params,
+			path_params => $path_params,
 			content => { json => $content },
 			handle_response_cb => sub { $self->_get_payment( @_ ) },
 		})
@@ -82,18 +100,6 @@ sub _get_payment {
 	);
 
 	return $Payment;
-}
-
-sub _path_params {
-	my ( $self ) = @_;
-
-	return [qw/ external_id /];
-}
-
-sub _query_params {
-	my ( $self ) = @_;
-
-	return [qw/ is_customer_id /];
 }
 
 __PACKAGE__->meta->make_immutable;

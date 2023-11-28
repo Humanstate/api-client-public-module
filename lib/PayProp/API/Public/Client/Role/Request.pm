@@ -40,12 +40,16 @@ Define methods to make async requests via C<Mojo::UserAgent> and return C<Mojo::
 
 =cut
 
-requires qw/ _query_params /;
-
 has url => (
 	is => 'rw',
 	isa => 'Str',
 	default => sub { die 'you must override default url value' }
+);
+
+has ordered_path_params => (
+	is => 'rw',
+	isa => 'ArrayRef[Str]',
+	default => sub { [] },
 );
 
 =head2 get_req_p
@@ -89,8 +93,47 @@ See L<https://docs.mojolicious.org/Mojo/UserAgent#post_p> for returned values.
 
 =cut
 
-sub put_req_p { shift->_handle_request( 'put_p', @_ ) }
 sub post_req_p { shift->_handle_request( 'post_p', @_ ) }
+
+=head2 put_req_p
+
+Perform PUT request and return C<Mojo::Promise>.
+See L<https://docs.mojolicious.org/Mojo/UserAgent#put_p> for returned values.
+
+	$self
+		->put_req_p({
+			params => {},
+			headers => {},
+			content => { json => { ... } },
+		})
+		->then( sub {
+			my ( $Transaction, ... ) = @_;
+			...;
+		} )
+		->wait
+	;
+
+=cut
+
+sub put_req_p { shift->_handle_request( 'put_p', @_ ) }
+
+=head2 delete_req_p
+
+Perform DELETE request and return C<Mojo::Promise>.
+See L<https://docs.mojolicious.org/Mojo/UserAgent#delete_p> for returned values.
+
+	$self
+		->delete_req_p({ ... })
+		->then( sub {
+			my ( $Transaction, ... ) = @_;
+			...;
+		} )
+		->wait
+	;
+
+=cut
+
+sub delete_req_p { shift->_handle_request( 'delete_p', @_ ) }
 
 sub _handle_request {
 	my ( $self, $http_verb, $args ) = @_;
@@ -99,10 +142,11 @@ sub _handle_request {
 	my $params = $args->{params} // {};
 	my $content = $args->{content} // {};
 	my $headers = $args->{headers} // {};
+	my $path_params = $args->{path_params} // {};
 
 	return
 		$self->ua->$http_verb(
-			$self->_build_url( $params ),
+			$self->_build_url( $params, $path_params ),
 			$headers,
 			( ref $content ? $content->%* : $content ),
 		)
@@ -114,19 +158,21 @@ sub _handle_request {
 }
 
 sub _build_url {
-	my ( $self, $params ) = @_;
+	my ( $self, $params, $path_params ) = @_;
 
 	$params //= {};
-	my $path_params = delete $params->{path_params} // {};
+	$path_params //= {};
 
 	my $URL = Mojo::URL->new( $self->url . ( $path_params->%* ? '/' : '' ) ); # trailing slash preserves "route path"
 
-	$URL->path( join( '/', map { $path_params->{ $_ } } ( grep { exists $path_params->{ $_ } } $self->_path_params->@* ) ) )
+	$URL->path( join( '/', map { $path_params->{ $_ } } ( grep { exists $path_params->{ $_ } } $self->ordered_path_params->@* ) ) )
 		if $path_params->%*
 	;
 
+	$self->ordered_path_params([]); # reset for next request
+
 	return $URL
-		->query({ map { $_ => $params->{ $_ } } ( grep { exists $params->{ $_ } } $self->_query_params->@* ) })
+		->query( $params )
 		->to_string
 	;
 }
